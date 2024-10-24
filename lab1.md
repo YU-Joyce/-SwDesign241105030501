@@ -91,3 +91,29 @@
 - Các lớp phân tích trên đảm bảo hệ thống có thể quản lý linh hoạt phương thức thanh toán, đảm bảo tính chính xác và bảo mật trong quá trình xử lý lương cho nhân viên.
 
 ## IV - Phân tích ca sử dụng Maintain Timecard
+![](https://www.planttext.com/api/plantuml/png/b5D1IiD05DtFAJvTATGBP27TY1P415lGvNGQqh7992QJO9RIXGitUW2XjKYXK73XAhFeOehtc1Du1ITDGqqx1DtD_BptvlttoBTOjYAEGnvxBiA4-o6SU87hfxQD0ZscX0QOSMXqsmt04NJRrV4bJaFVTQ_IYDlU6b6PLC4Twja4X_qrhhpiw8N-hKrueLIS4IeTmT6nDc31wdarOWwmWSeM0IHo3AcSnq1KDelBQKzbKuqX-lRk0P6Vp47TTgvGCMZ1pPRA1paCE6L6UeMOAvKhM72kOQc9f9N536jJyer1GkMSeP9byD89jG8aIZpypK0UnXbLOiIqToMUZAoz-2wAXEgtXGFco77QX4Y95t3q8wzDyEHqypNHWqToQ8xqL8a5_NUQcxejk9OJKjJ8zbu4lUOq05UVqOPGd-DGPKiETt4-kDyAezeslpvYe-UQwdwRTdE-Nd_C1dNDTOg0UdBY6oX5icLtEptpMchBPltyV_u1003__mC0)
+
+#### Bảng Phân Tích cho Ca Sử Dụng Maintain Timecard
+
+| **Lớp**                | **Nhiệm vụ**                                                                                     | **Thuộc tính**                                                       | **Quan hệ**                                    |
+|------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|------------------------------------------------|
+| **Nhân viên (Employee)** | - Nhập và chỉnh sửa bảng chấm công. <br> - Chỉ có thể truy cập bảng chấm công của chính mình. | - ID: int <br> - Tên: String <br> - Địa chỉ: String <br> - Loại: String | - Một nhân viên có thể có nhiều bảng chấm công (1-n). |
+| **Bảng chấm công (Timecard)** | - Lưu trữ thông tin thời gian làm việc. <br> - Cung cấp thông tin cho hệ thống.           | - Ngày: Date <br> - Số giờ làm việc: float <br> - Số giờ làm thêm: float <br> - Mã công việc: String | - Một bảng chấm công thuộc về một nhân viên (n-1). <br> - Một bảng chấm công liên kết với một hoặc nhiều mã công việc. |
+| **Hệ thống Payroll (PayrollSystem)** | - Kiểm soát toàn bộ quy trình chấm công. <br> - Giao tiếp giữa các thành phần khác nhau. | - Danh sách nhân viên: List<Employee> <br> - Danh sách bảng chấm công: List<Timecard> | - Quản lý nhiều nhân viên và bảng chấm công tương ứng (1-n). |
+| **Dự án (Project)**    | - Kiểm tra tính hợp lệ của mã công việc.                                                       | - Mã dự án: String <br> - Tên dự án: String                           | - Mã công việc từ bảng chấm công phải khớp với mã dự án (1-n). |
+
+## 4.0 - Kết quả mong đợi
+#### 4.1. Biểu đồ lớp
+![](https://www.planttext.com/api/plantuml/png/V58xJiGm4ErpYb4QFj8Mj152Ax588C5gfKMYdas6nE1Fi9sL8aHDJKt52JX02WfEaXDm1Uny5YzYQIBxpPjvxqtyrNnCZKLjAy6ZbACnS2PAhceYU8m0u6AM09FM7oKAIc1fDPEvlsEMQJ8cX6nTRb5oijTCK8ewsp_mWAbMWeNOKpJ8ZbWlcw5rWsRkws-5ghIvKVgUiWHkkSBEZrgJjgxht5S3F2rGvpIln8fqQCRWcaB51TPQSRwiZINHozAGtOsxPCOUZxiuwS8D3iVYwBWhhf4pR_eq41yYEzc_0Y-qkgFKziAxF9SzQVvhzJlKtEmzk6gR5mOF5KeeskOPSjOsxmZfvriAl6rUosZpX-EZ62OJY0_Zd_Kd41TeucXxEm5pq-sO0YNcz1yxdEl2fEx1UFu6ZcLFTHtZGXnppEUOKvAPVvpV0000__y30000)
+
+#### 4.2. Giải thích biểu đồ lớp
+
+| **Lớp**                | **Mô Tả**                                                                                                                                           |
+|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Employee (Nhân viên)** | - Mỗi nhân viên có một danh sách các bảng chấm công. <br> - Nhân viên có thể gửi và chỉnh sửa bảng chấm công của mình.                          |
+| **Timecard (Bảng chấm công)** | - Lưu trữ thông tin về ngày làm việc, số giờ làm việc và mã công việc. <br> - Có mối quan hệ với `Project` để kiểm tra tính hợp lệ của mã công việc. |
+| **PayrollSystem (Hệ thống Payroll)** | - Quản lý nhiều nhân viên và các bảng chấm công tương ứng. <br> - Thực hiện quá trình lưu và xác thực các bảng chấm công.                         |
+| **Project (Dự án)**    | - Chứa thông tin về mã công việc và tên dự án. <br> - Được sử dụng để xác thực mã công việc từ bảng chấm công của nhân viên.                       |
+
+## V - Hợp nhất kết quả phân tích
+
