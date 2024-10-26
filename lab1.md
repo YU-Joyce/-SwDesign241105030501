@@ -116,4 +116,98 @@
 | **Project (Dự án)**    | - Chứa thông tin về mã công việc và tên dự án. <br> - Được sử dụng để xác thực mã công việc từ bảng chấm công của nhân viên.                       |
 
 ## V - Hợp nhất kết quả phân tích
+### **Giới Thiệu**
+Hệ thống Payroll của Acme, Inc. giúp nhân viên ghi lại thông tin thẻ thời gian và tự động tạo khoản thanh toán dựa trên số giờ làm việc cũng như tổng số tiền bán hàng (đối với nhân viên nhận hoa hồng). Tài liệu này hợp nhất phân tích hai ca sử dụng quan trọng: **Maintain Timecard** và **Payment**.
+
+---
+
+### **1. Ca Sử Dụng Hợp Nhất: Maintain Timecard và Payment**
+
+#### **Actors**:
+| Actor                    | Mô tả                                                                                   |
+|--------------------------|-----------------------------------------------------------------------------------------|
+| **Employee**             | Nhân viên ghi nhận thời gian làm việc và nhận thanh toán.                               |
+| **Payroll System**       | Hệ thống ghi nhận thẻ thời gian và xử lý thanh toán.                                    |
+| **Payroll Administrator**| Quản lý thông tin thanh toán và hỗ trợ quy trình thanh toán.                            |
+
+---
+
+#### **Preconditions**
+- **Nhân viên** đã đăng nhập và có quyền truy cập thông tin thẻ thời gian cá nhân.
+- Thông tin nhân viên, phương thức thanh toán và tỷ lệ lương giờ được lưu trữ trong hệ thống.
+- Dữ liệu về số thẻ chi phí (charge numbers) từ Cơ sở Dữ liệu Quản lý Dự án (Project Management Database).
+
+#### **Postconditions**
+- Thông tin thẻ thời gian được ghi nhận chính xác và thanh toán được tính toán đúng hạn.
+- Dữ liệu thẻ thời gian và thanh toán sẵn sàng cho việc báo cáo và xử lý tự động.
+
+---
+
+### **2. Luồng Chính**
+
+1. **Đăng Nhập**:  
+   - Nhân viên đăng nhập vào hệ thống Payroll.
+
+2. **Ghi Nhận Thẻ Thời Gian**:
+   - Chọn tùy chọn "Nhập Thẻ Thời Gian" từ menu chính, nhập ngày làm việc, giờ làm việc và số thẻ chi phí.
+
+3. **Tính Toán Lương**:
+   - Hệ thống xác định loại nhân viên (theo giờ, lương cố định, hoặc có hoa hồng) và tự động tính toán lương:
+     - **Nhân viên theo giờ**: giờ làm thêm (nếu có) được tính 1.5 lần.
+     - **Nhân viên có hoa hồng**: tính hoa hồng từ các đơn hàng bán hàng.
+
+4. **Thanh Toán**:
+   - Hệ thống xử lý thanh toán vào **thứ Sáu hàng tuần** và **ngày làm việc cuối tháng** theo phương thức thanh toán mà nhân viên lựa chọn (chuyển khoản, bưu điện, hoặc tại văn phòng).
+
+5. **Xác Nhận Ghi Nhận**:
+   - Hệ thống lưu trữ thông tin và xác nhận thành công việc gửi thẻ thời gian.
+
+6. **Đăng Xuất**:
+   - Nhân viên đăng xuất khỏi hệ thống.
+
+---
+
+### **3. Luồng Thay Thế**
+
+- **Số Thẻ Chi Phí Không Hợp Lệ**:
+   - Hệ thống thông báo lỗi nếu số thẻ không hợp lệ.
+
+- **Thông Tin Thẻ Thời Gian Không Đầy Đủ**:
+   - Hệ thống yêu cầu nhập đủ thông tin.
+
+- **Chỉnh Sửa Thẻ Thời Gian**:
+   - Nhân viên có thể chỉnh sửa nếu vẫn nằm trong kỳ thanh toán.
+
+- **Xác Nhận Giờ Làm Thêm**:
+   - Nhân viên xác nhận nếu có giờ làm thêm.
+
+---
+
+### **4. Ngoại Lệ**
+
+| Ngoại lệ                                    | Mô tả                                                                                                                                                     |
+|---------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Lỗi Hệ Thống**                            | Hệ thống gặp sự cố khiến nhân viên không thể gửi hoặc chỉnh sửa thẻ thời gian.                                                                             |
+| **Quá Trình Thanh Toán Đang Tiến Hành**     | Hệ thống không cho phép chỉnh sửa thẻ thời gian trong khi thanh toán đang được xử lý.                                                                    |
+
+---
+
+### **5. Quy Tắc Kinh Doanh**
+
+| Quy Tắc Kinh Doanh                          | Chi Tiết                                                                                             |
+|---------------------------------------------|------------------------------------------------------------------------------------------------------|
+| **Thời Hạn Nộp Thẻ Thời Gian**              | Nhân viên nộp thẻ trước **thứ Sáu** và **ngày làm việc cuối tháng** để đảm bảo thanh toán đúng hạn. |
+| **Tính Lương Giờ Làm Thêm**                 | Giờ làm thêm được tính **1.5 lần** tỷ lệ giờ làm bình thường.                                        |
+
+---
+
+## **6. Yêu Cầu Phi Chức Năng**
+
+- **Hiệu suất**: Hệ thống phản hồi nhanh chóng cho mọi nhân viên.
+- **Bảo mật**: Dữ liệu thẻ thời gian được bảo vệ với quyền truy cập hạn chế.
+
+---
+
+## **Kết Luận**
+Phân tích ca sử dụng hợp nhất này giúp hệ thống Payroll của Acme, Inc. ghi nhận thông tin thời gian làm việc và đảm bảo khoản thanh toán chính xác, đúng hạn cho mỗi nhân viên dựa trên loại nhân viên và phương thức thanh toán.
 
