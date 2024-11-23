@@ -21,26 +21,26 @@ Thiết kế này tập trung vào việc phân chia rõ ràng trách nhiệm gi
 
 ## **3. Giải Thích Các Use Case**
 ### **3.1. Use Case của Employee**
-1. **Enter Timecard Info**:
+1. **Enter Timecard Info  (thông tin bản chấm công)**:
    - Nhân viên nhập thông tin về thời gian làm việc để hệ thống tính toán lương một cách chính xác.
    - Điều này đảm bảo nhân viên được trả lương đầy đủ và đúng hạn.
 
-2. **Enter Purchase Order Info**:
+2. **Enter Purchase Order Info  (thông tin đơn hàng mua)**:
    - Dành cho các nhân viên có hoa hồng, họ có thể ghi lại các đơn hàng để hệ thống tính toán phần hoa hồng dựa trên doanh thu.
 
-3. **View Personal Reports**:
+3. **View Personal Reports (Xem Báo Cáo Cá Nhân)**: 
    - Cho phép nhân viên kiểm tra thông tin cá nhân như số giờ làm, lương đã nhận, và ngày nghỉ còn lại.
    - Tính năng này tăng tính minh bạch và giảm sự phụ thuộc vào bộ phận nhân sự.
 
-4. **Update Payment Method**:
+4. **Update Payment Method (Cập Nhật Phương Thức Thanh Toán)**:
    - Nhân viên có thể tùy chọn phương thức nhận lương: gửi qua bưu điện, chuyển khoản, hoặc nhận trực tiếp tại văn phòng.
    - Linh hoạt trong cách nhận lương giúp hệ thống thân thiện với người dùng.
 
 ### **3.2. Use Case của Payroll Administrator**
-1. **Manage Employee Info**:
+1. **Manage Employee Info (Quản Lý Thông Tin Nhân Viên)**:
    - Quản trị viên có thể thêm, xóa hoặc chỉnh sửa thông tin nhân viên, bao gồm các thay đổi về tên, địa chỉ, và phân loại lương (theo giờ, lương cứng, hoặc lương có hoa hồng).
 
-2. **Generate Admin Reports**:
+2. **Generate Admin Reports (Báo Cáo Của Quản Trị Viên)**:
    - Tạo các báo cáo hành chính, ví dụ: bảng lương tổng hợp, báo cáo giờ làm việc theo dự án, hoặc phân tích chi phí lao động.
 
 3. **Update Payment Settings**:
@@ -61,3 +61,8 @@ Thiết kế này tập trung vào việc phân chia rõ ràng trách nhiệm gi
 
 4. **Tính linh hoạt**:
    - Nhân viên có thể tùy chỉnh phương thức nhận lương và kiểm tra dữ liệu cá nhân một cách dễ dàng.
+
+---
+
+## **5. Kết Luận**
+Thiết kế trên giúp đảm bảo hệ thống **Payroll System** vừa đáp ứng đầy đủ yêu cầu chức năng, vừa tối ưu hóa trải nghiệm người dùng. Với cấu trúc rõ ràng và phân quyền hợp lý, hệ thống có thể vận hành trơn tru, hỗ trợ tốt cho cả nhân viên và quản trị viên trong việc quản lý bảng lương và thông tin liên quan.
